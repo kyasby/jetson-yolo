@@ -6,8 +6,10 @@ sudo apt-get update
 
 sudo apt-get -y install python3-pip libopenblas-base libopenmpi-dev 
 pip3 install Cython
-pip3 install numpy torch-1.8.0-cp36-cp36m-linux_aarch64.whl
-rm  torch-1.8.0-cp36-cp36m-linux_aarch64.whl
+#pip3 install numpy torch-1.8.0-cp36-cp36m-linux_aarch64.whl
+#rm  torch-1.8.0-cp36-cp36m-linux_aarch64.whl
+pip3 install numpy torch-1.7.0-cp36-cp36m-linux_aarch64.whl
+rm  torch-1.7.0-cp36-cp36m-linux_aarch64.whl
 
 
 echo 'pytorch sucsessfully installed'
