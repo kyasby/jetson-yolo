@@ -1,0 +1,4 @@
+*.tar
+*.pt
+inference
+__pycache__
