@@ -4,8 +4,8 @@ import datetime
 
 def send_file(file_name, title):
 
-	TOKEN = 'xoxb-1799069728919-1974247883073-Ww7Z5L7hd8qAP6wz026XMl13'
-	CHANNEL = 'D01SSAMFZCZ'
+	TOKEN = ''
+	CHANNEL = ''
 
 	files = {'file': open(file_name, 'rb')}
 	param = {
@@ -19,7 +19,7 @@ def send_file(file_name, title):
 
 def send_regular_report(content):
 
-	WEB_HOOK_URL = "https://hooks.slack.com/services/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"
+	WEB_HOOK_URL = "https://hooks.slack.com/services/"
 	
 	dt_now = datetime.datetime.now()
 	content = str(content).replace("},", "}\n")
