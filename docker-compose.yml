@@ -2,7 +2,7 @@ version: '3'
 services:
   yolo-deepsort:
     image: yolo-pytorch
-    command: python3 /home/ryo/Desktop/Yolov5_DeepSort_live/main.py --source 0 --view-img --road-direction left_is_up --classes 0 2 --weight yolov5x.pt
+    command: python3 /home/ryo/Documents/Jetson/jetson-yolo/main.py --source 0 --view-img --road-direction left_is_up --classes 0 2 --weight yolov5x.pt
     runtime: nvidia
     volumes:
       - /home:/home
@@ -11,6 +11,6 @@ services:
       - DISPLAY=${DISPLAY}
     devices:
       - /dev/video0:/dev/video0
-    working_dir: /home/ryo/Desktop/Yolov5_DeepSort_live
+    working_dir: /home/ryo/Documents/Jetson/jetson-yolo
 
 

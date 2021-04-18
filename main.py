@@ -9,6 +9,8 @@ from deep_sort_pytorch.utils.parser import get_config
 from deep_sort_pytorch.utils.tools  import objid2name, objname2id
 from deep_sort_pytorch.deep_sort import DeepSort
 
+from slack import send_regular_report
+
 import argparse
 import os
 import platform
@@ -26,7 +28,6 @@ import csv
 
 
 palette = (2 ** 5 - 1, 2 ** 15 - 1, 2 ** 20 - 1)
-
 
 
 def bbox_rel(*xyxy):
@@ -296,14 +297,20 @@ def detect(opt, save_img=False):
                     vid_writer.write(im0)
 
 
-        minute_tmp = datetime.datetime.now().minute
-        if minute_tmp != minute_last:
-            minute_last = minute_tmp
-            df = pd.DataFrame(deepsort.count).reset_index()
+        minute_now = datetime.datetime.now().minute
+        if minute_now != minute_last:
+            minute_last = minute_now
+            count_str = deepsort.count
+            df = pd.DataFrame(count_str).reset_index()
             dt_minute = datetime.datetime.now().strftime("%Y/%m/%d_%H:%M:%S")
             df_date = pd.DataFrame([dt_minute, dt_minute])
             df = df.merge(df_date, left_index=True, right_index=True)
             df.to_csv(f"./{dt_today}.csv", mode="a", header=False, index=False)
+
+            if minute_now in range(61):
+                print(minute_now)
+                send_regular_report(count_str)
+                print(minute_now)
 
     if save_txt or save_img:
         print('Results saved to %s' % out)
@@ -330,7 +337,7 @@ def detect(opt, save_img=False):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', type=str,
-                        default='yolov5/weights/yolov5x.pt', help='model.pt path')
+                        default='yolov5x.pt', help='model.pt path')
     # file/folder, 0 for webcam
     parser.add_argument('--source', type=str,
                         default='inference/images', help='source')
@@ -360,7 +367,7 @@ if __name__ == '__main__':
     parser.add_argument("--config_deepsort", type=str,
                         default="deep_sort_pytorch/configs/deep_sort.yaml")
     parser.add_argument("--road-direction", type=str,
-                        default="", help="right_up or right_down")
+                        default="left_is_up", help="right_up or right_down")
     parser.add_argument("--mask-img-file-path", type=str,
                         default="", help="full path to mask image_ ile")
 
